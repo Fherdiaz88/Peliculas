@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/serie/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_SERIES_URL")
+}
+
+model Serie {
+  id         Int    @id @default(autoincrement())
+  titulo     String
+  director   String
+  genero     String
+  temporadas Int
+}

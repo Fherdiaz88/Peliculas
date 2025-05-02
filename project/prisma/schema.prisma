@@ -1,0 +1,43 @@
+// schema.prisma
+
+// Base de datos de Películas
+datasource peliculas {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_PELICULAS")
+}
+
+
+// Modelo de Películas
+model Pelicula {
+  id         Int      @id @default(autoincrement())
+  titulo     String
+  director  String
+  genero     String
+  duracion   Int
+  actores    String
+  produccion String
+  contenido  Contenido[]
+}
+
+// Modelo de Serie
+model Serie {
+  id         Int      @id @default(autoincrement())
+  titulo     String
+  director  String
+  genero     String
+  temporadas Int
+  actores    String
+  produccion String
+  contenido  Contenido[]
+}
+
+// Modelo de Contenido (relación entre Películas y Series)
+model Contenido {
+  id         Int      @id @default(autoincrement())
+  tipo       String   // Puede ser 'Pelicula' o 'Serie'
+  peliculaId Int?
+  serieId    Int?
+
+  pelicula   Pelicula? @relation(fields: [peliculaId], references: [id])
+  serie      Serie?    @relation(fields: [serieId], references: [id])
+}
